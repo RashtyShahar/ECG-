@@ -18,6 +18,7 @@ def train_test_split(dataset, ratio, batch_size, num_workers=0):
 
 def PtBXL_set_spit(dataset,table, batch_size, num_workers):
     '''
+    Split the data to val,train,test sets based on strat-fold from ptbxl_database.csv
     :param dataset:
     :param table:
     :param batch_size:
