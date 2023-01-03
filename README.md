@@ -15,12 +15,10 @@ check- requirements.yml
 #### References:
 1. PyTorch Doc.
 
-2. cs236781 tutorials by Aviv A. Rosenberg.
+2. PhysioNet
 
-3. bm336546 lectures
+3. Bm-336018 tutorials
 
-4. PhysioNet
 
-5. bm-336018 tutorials
 
-guided by Eran Zvuloni
+Guided by Eran Zvuloni
