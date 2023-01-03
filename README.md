@@ -4,6 +4,7 @@ PhysioNet PTB-XL, a large publicly available of 12-lead electrocardiography data
 https://physionet.org/content/ptb-xl/1.0.1/
 ## tasks
 1.Age estimation - regression 
+
 2.Classification 
 ## Architecture - based on 'Automatic diagnosis of the 12-lead ECG using a deep neural network' by Ribeiro, Antônio H et-al
 Original model was built with Tensorflow and we recreated it using Pytorch
