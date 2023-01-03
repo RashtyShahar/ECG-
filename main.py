@@ -95,9 +95,6 @@ loss_function = nn.L1Loss() if task == 'age estimation' else nn.BCELoss()
 learning_rate = 0.0001
 optimizer = torch.optim.Adam(params=ecg_net.parameters(), lr=learning_rate)
 epochs = 15
-'''
-# binary classification task: Binary Cross Entropy --->  atrial fibrillation risk prediction
-'''
 
 # training the model:
 early_stopping = EarlyStopping(patience=5, verbose=True)
@@ -112,7 +109,7 @@ for i_epoch in range(epochs):
     train_loss, y_true_train, y_pred_train = forward_epoch(ecg_net, dl_train, loss_function, optimizer, train_loss,
                                                            to_train=True, desc='Train', device=device) #SR:changed device - torch.device('cpu') ?
 
-    # Should be validation in real tasks...!
+    
     val_loss, y_true_val, y_pred_val = forward_epoch(ecg_net, dl_val, loss_function, optimizer, val_loss,
                                                         to_train=False, desc='Validation', device=device)
 
