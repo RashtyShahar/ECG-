@@ -9,7 +9,7 @@ import torch
 class ECGDataset(Dataset):
 
     def __init__(self, ECG_path, table_path, Transform,task):
-        super().__init__()  # When using a subclass, remember to inherit its properties.
+        super().__init__()  
         # Define self.ECG_path, self.table (with pandas reading csv) and self.transform (create an object from the transform we implemented):
         self.ECG_path = ECG_path
         self.table = pd.read_csv(table_path)
