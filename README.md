@@ -9,7 +9,7 @@ https://physionet.org/content/ptb-xl/1.0.1/
 ## Architecture - based on 'Automatic diagnosis of the 12-lead ECG using a deep neural network' by Ribeiro, Antônio H et-al
 ![image](https://user-images.githubusercontent.com/112961476/210334307-cc42f997-f1b6-4bc0-b2a7-2e346646ec68.png)
 ## Requirements:
-check- requirements.yml
+conda env create -f requirments.yml
 
 #### References:
 1. PyTorch Doc.
