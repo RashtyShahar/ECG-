@@ -3,7 +3,7 @@ import torch
 
 class ECGTransform(object):
     """
-    This will transform the ECG signal into a PyTorch tensor. This is the place to apply other transformations as well, e.g., normalization, etc.
+    This will transform the ECG signal into a PyTorch tensor.
     """
     def __call__(self, signal):
         # Transform the data type from double (float64) to single (float32) to match the later network weights.
