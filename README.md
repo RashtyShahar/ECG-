@@ -7,7 +7,6 @@ https://physionet.org/content/ptb-xl/1.0.1/
 
 2.Cardiac arrhyth-mia diagnosis - Classification 
 ## Architecture - based on 'Automatic diagnosis of the 12-lead ECG using a deep neural network' by Ribeiro, Antônio H et-al
-Original model was built with Tensorflow and we recreated it using Pytorch
 ![image](https://user-images.githubusercontent.com/112961476/210334307-cc42f997-f1b6-4bc0-b2a7-2e346646ec68.png)
 ## Requirements:
 check- requirements.yml
