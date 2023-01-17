@@ -12,11 +12,14 @@ https://physionet.org/content/ptb-xl/1.0.1/
 conda env create -f requirments.yml
 
 ## Results:
-Age estimation :
-![image](https://user-images.githubusercontent.com/112961476/212991289-7eefa36b-96ea-40f4-b135-07e7a7fcc0f9.png)
-![image](https://user-images.githubusercontent.com/112961476/212991314-30a3413e-764f-4720-a863-b6877d208bb7.png)
+### Age estimation :
 
-Classification :
+![image](https://user-images.githubusercontent.com/112961476/212991578-459ef94f-6e79-4494-a41a-a2fb216c18ea.png)
+
+![image](https://user-images.githubusercontent.com/112961476/212991609-fcd48f0f-bbb1-4847-a765-2e58552c1746.png)
+
+
+### Classification :
 
 
 
