@@ -11,6 +11,19 @@ https://physionet.org/content/ptb-xl/1.0.1/
 ## Requirements:
 conda env create -f requirments.yml
 
+## Results:
+Age estimation :
+![image](https://user-images.githubusercontent.com/112961476/212991289-7eefa36b-96ea-40f4-b135-07e7a7fcc0f9.png)
+![image](https://user-images.githubusercontent.com/112961476/212991314-30a3413e-764f-4720-a863-b6877d208bb7.png)
+
+Classification :
+
+
+
+
+
+
+
 #### References:
 1. PyTorch Doc.
 
