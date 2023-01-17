@@ -2,8 +2,12 @@ import numpy as np
 import torch
 
 class EarlyStopping:
-    """Early stops the training if validation loss doesn't improve after a given patience."""
-    def __init__(self, patience=7, verbose=False, delta=0, path='checkpoint.pt', trace_func=print):
+    """
+    Lerning rate  will be is reduced by a factor of 10 whenever the validation loss
+    does not present any improvement for learning_patience consecutive epochs.
+    Early stops the training if validation loss doesn't improve after a given patience.
+    """
+    def __init__(self, patience=5, verbose=False, delta=0.0001, path='checkpoint.pt', trace_func=print, learning_rate=0.001,learning_patience=7):
         """
         Args:
             patience (int): How long to wait after last time validation loss improved.
@@ -16,6 +20,10 @@ class EarlyStopping:
                             Default: 'checkpoint.pt'
             trace_func (function): trace print function.
                             Default: print
+            learning_rate(int):learning_rate
+                            Default:0.001
+            learning_patience(int): How long to wait after last time validation loss improved before changing learning rate
+                            Default:7
         """
         self.patience = patience
         self.verbose = verbose
@@ -26,18 +34,36 @@ class EarlyStopping:
         self.delta = delta
         self.path = path
         self.trace_func = trace_func
-    def __call__(self, val_loss, model):
+        self.learning_rate = learning_rate
+        self.reduce_learning_rate = False
+        self.no_improvement_count = 0
+        self.learning_patience = learning_patience #should be smaller than patience
+        self.counter_of_decreasment=0
+    def __call__(self, val_loss, model,optimizer):
 
         score = -val_loss
 
         if self.best_score is None:
             self.best_score = score
             self.save_checkpoint(val_loss, model)
-        elif score < self.best_score + self.delta:
+        elif score <= self.best_score + self.delta:
             self.counter += 1
+            self.no_improvement_count +=1
             self.trace_func(f'EarlyStopping counter: {self.counter} out of {self.patience}')
+            self.trace_func(f'Reduce learning rate counter: {self.no_improvement_count} out of {self.learning_patience}')
             if self.counter >= self.patience:
                 self.early_stop = True
+            if self.no_improvement_count >= self.learning_patience:
+                    self.reduce_learning_rate = True
+                    self.no_improvement_count = 0
+                    self.counter_of_decreasment+=1
+                    if self.counter_of_decreasment>2: # we only allow 2 reduction at the lr
+                        self.trace_func(f'leaning rate was reduced by a factor of 100')
+                        self.early_stop = True
+                    for param_group in optimizer.param_groups:
+                        param_group['lr'] = self.learning_rate / 10
+                    self.learning_rate = self.learning_rate / 10
+                    self.trace_func(f'learning rate reduced to {self.learning_rate}')
         else:
             self.best_score = score
             self.save_checkpoint(val_loss, model)
