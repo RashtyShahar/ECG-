@@ -56,15 +56,24 @@ class EcgModel(nn.Module):
 
         self.Res1=ResBlk(in_channels=64,out_channels=128,n_samples_in=self.in_samples,n_samples_out=512)
         self.Res2=ResBlk(in_channels=128,out_channels=196,n_samples_in=512,n_samples_out=256)
-        self.Res3=ResBlk(in_channels=196,out_channels=256,n_samples_in=256,n_samples_out=64)
-        self.Res4=ResBlk(in_channels=256,out_channels=320,n_samples_in=64,n_samples_out=16)
+        # self.Res3=ResBlk(in_channels=196,out_channels=256,n_samples_in=256,n_samples_out=64)
+        # self.Res4=ResBlk(in_channels=256,out_channels=320,n_samples_in=64,n_samples_out=16)
+
+        #to get 4 blocks delete this and uncomment 2 lines above
+        self.Res3=ResBlk(in_channels=196,out_channels=320,n_samples_in=256,n_samples_out=16)
+        # self.Res2=ResBlk(in_channels=128,out_channels=320,n_samples_in=512,n_samples_out=64)
 
 
         # Compute the CNN->ResBlk1-> ->ResBlk4 output size here to use as the input size for the fully-connected part.
         low,up = self.Res1(self.CNN(torch.zeros(input_shape)),self.CNN(torch.zeros(input_shape)))
         low2,up2 = self.Res2(low,up)
-        low3,up3 = self.Res3(low2,up2)
-        CNN_forward,_ = self.Res4(low3,up3)
+        # low3,up3 = self.Res3(low2,up2)
+        # CNN_forward,_ = self.Res4(low3,up3)
+
+        #to get 4 blocks delete this and uncomment 2 lines above
+        CNN_forward,_ = self.Res3(low2,up2)
+        # CNN_forward,_ = self.Res2(low,up)
+
 
         # Define the fully-connected layers in a nn.Sequential.
         # Use nn.Linear for a fully-connected layer.
@@ -74,8 +83,8 @@ class EcgModel(nn.Module):
             self.FCs = nn.Sequential(
             nn.Linear(CNN_forward.shape[1] * CNN_forward.shape[2], 100),  # input shape is the flattened CNN output
             nn.ReLU(),
-            nn.Linear(100,6),
-            nn.Sigmoid()
+            nn.Linear(100,6)
+            # nn.Sigmoid()
         )
         elif self.task == 'age estimation':
             self.FCs = nn.Sequential(
@@ -91,7 +100,7 @@ class EcgModel(nn.Module):
         x,y=self.Res1(x,x)
         x,y=self.Res2(x,y)
         x,y=self.Res3(x,y)
-        x,_=self.Res4(x,y)
+        # x,_=self.Res4(x,y)
         features = x.view(x.size(0), -1)
         scores = self.FCs(features)
         return torch.squeeze(scores)

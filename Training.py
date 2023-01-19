@@ -51,7 +51,7 @@ def forward_epoch(model, dl, loss_function, optimizer, total_loss, to_train=Fals
                     # Progress bar:
                     pbar.update(1)
 
-        # concatenate all y to be returned as a single tensor
+        # concatenate y to be return as a single tensor
         y_true_all=torch.cat(y_true_all[:-1])
         y_pred_all=torch.cat(y_pred_all[:-1])
 

@@ -100,7 +100,7 @@ pos_weight = pos_weight.to(device)
 classification_loss=nn.BCEWithLogitsLoss(pos_weight=pos_weight)
 loss_function = nn.L1Loss() if task == 'age estimation' else classification_loss
 
-learning_rate = 0.0001
+learning_rate = 0.001
 optimizer = torch.optim.Adam(params=ecg_net.parameters(), lr=learning_rate)
 epochs = 80
 '''

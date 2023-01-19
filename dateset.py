@@ -8,20 +8,24 @@ import torch
 
 class ECGDataset(Dataset):
 
-    def __init__(self, ECG_path, table_path, Transform,task):
-        super().__init__()  
+    def __init__(self, ECG_path, table_path, Transform,task,frequency):
+        super().__init__()  # When using a subclass, remember to inherit its properties.
         # Define self.ECG_path, self.table (with pandas reading csv) and self.transform (create an object from the transform we implemented):
         self.ECG_path = ECG_path
         self.table = pd.read_csv(table_path)
         self.transform = Transform
         self.task=task
+        self.frequency=frequency
 
     def get_wfdb_path(self, index):
         # A method to get the correct path according to the data arrangement:
         folder_num = str(int(np.floor(index / 1000)))
         if len(folder_num) < 2:
             folder_num = '0' + folder_num
-        wfdb_path = self.ECG_path + folder_num + '000' + '/' + f'{index:05d}' + '_lr'
+        if self.frequency==500:
+            wfdb_path = self.ECG_path + folder_num + '000' + '/' + f'{index:05d}' + '_hr' #HERE 100:_lr and 500  :_hr
+        elif self.frequency==100:
+            wfdb_path = self.ECG_path + folder_num + '000' + '/' + f'{index:05d}' + '_lr'
         return wfdb_path
 
     def get_label(self, index,task):  #deleted here task arg

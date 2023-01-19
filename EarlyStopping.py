@@ -38,7 +38,7 @@ class EarlyStopping:
         self.reduce_learning_rate = False
         self.no_improvement_count = 0
         self.learning_patience = learning_patience #should be smaller than patience
-        self.counter_of_decreasment=0
+        self.counter_of_decreasment=0 #how many times have we decresed lr
 
     def __call__(self, val_loss, model,optimizer):
 
