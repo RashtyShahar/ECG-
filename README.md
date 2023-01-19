@@ -21,6 +21,9 @@ conda env create -f requirments.yml
 
 ### Classification :
 
+![image](https://user-images.githubusercontent.com/112961476/213377444-e62ed994-8f18-4125-a7a8-bcde989da7d1.png)
+
+
 
 
 
