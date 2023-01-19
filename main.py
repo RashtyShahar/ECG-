@@ -11,14 +11,13 @@ from model1 import ecgNet
 from figures import figures , learning_curve
 from Training import forward_epoch
 from model_Rebeiro import EcgModel
-from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 from EarlyStopping import EarlyStopping
 
 
 
 # task and device definition:
 task = 'classification' # can be 'classification' or 'age estimation'
-task = 'age estimation'
+# task = 'age estimation'
 
 # device = "cuda" if torch.cuda.is_available() else "cpu"
 device = torch.device(2) if torch.cuda.is_available() else "cpu"
@@ -33,8 +32,10 @@ device = torch.device(2) if torch.cuda.is_available() else "cpu"
 # list_of_folders = os.listdir(ECG_path)
 # list_of_files = os.listdir(ECG_path + list_of_folders[0])
 
+# path at remote server
 DB_path = r"/home/rashty/data/"
-ECG_path = DB_path + r'records100/'
+frequency=100   # 500 Hz or 100 Hz
+ECG_path = DB_path + f'records{frequency}/'
 table_path = DB_path + 'ptbxl_database.csv'
 table_org = pd.read_csv(table_path)
 table_org['age']=pd.to_numeric(table_org['age'], errors='coerce')
@@ -57,7 +58,7 @@ transformed = test_transform(signal)
 
 
 # connecting our dataset with the dataloader:
-ecg_ds = ECGDataset(ECG_path, table_path, ECGTransform(), task=task)
+ecg_ds = ECGDataset(ECG_path, table_path, ECGTransform(), task=task,frequency=frequency)
 '''
 batch_to_show = 10 
 ecg_dl = DataLoader(ecg_ds, batch_size=batch_size, shuffle=True, num_workers=0)
@@ -75,7 +76,7 @@ print(len(dl_train))
 print(len(dl_val))
 print(len(dl_test))
 '''
-batch_size = 8
+batch_size = 256
 dl_train, dl_val, dl_test = PtBXL_set_spit(ecg_ds,table,batch_size, num_workers=0)
 
 
@@ -89,15 +90,25 @@ ecg_net = ecgNet([4, 12, 1000],task)
 batch_size = 4
 '''
 
-# loss function, learning rate, optimization and epochs defenitions:
+# loss function, learning rate, optimization and epochs definitions:
 
-loss_function = nn.L1Loss() if task == 'age estimation' else nn.BCELoss()
+# labels = ['1AVB', 'CRBBB', 'CLBBB', 'SBRAD', 'AFIB', 'STACH']
+total_examples=21748
+pos_weight=torch.tensor([(total_examples-787)/787,(total_examples-538)/538,(total_examples-526)/526,(total_examples-637)/637,(total_examples-1493)/1493,(total_examples-825)/825])
+pos_weight = pos_weight.to(device)
+# loss_function = nn.L1Loss() if task == 'age estimation' else nn.BCELoss()
+classification_loss=nn.BCEWithLogitsLoss(pos_weight=pos_weight)
+loss_function = nn.L1Loss() if task == 'age estimation' else classification_loss
+
 learning_rate = 0.0001
 optimizer = torch.optim.Adam(params=ecg_net.parameters(), lr=learning_rate)
-epochs = 15
+epochs = 80
+'''
+# binary classification task: Binary Cross Entropy --->  atrial fibrillation risk prediction
+'''
 
 # training the model:
-early_stopping = EarlyStopping(patience=5, verbose=True)
+early_stopping = EarlyStopping(patience=13, verbose=True,learning_rate=learning_rate,learning_patience=10)
 train_loss_vec = []
 val_loss_vec = []
 
@@ -107,9 +118,8 @@ for i_epoch in range(epochs):
     print(f'Epoch: {i_epoch + 1}/{epochs}\n')
 
     train_loss, y_true_train, y_pred_train = forward_epoch(ecg_net, dl_train, loss_function, optimizer, train_loss,
-                                                           to_train=True, desc='Train', device=device) #SR:changed device - torch.device('cpu') ?
+                                                           to_train=True, desc='Train', device=device)
 
-    
     val_loss, y_true_val, y_pred_val = forward_epoch(ecg_net, dl_val, loss_function, optimizer, val_loss,
                                                         to_train=False, desc='Validation', device=device)
 
@@ -119,7 +129,7 @@ for i_epoch in range(epochs):
     val_loss = val_loss / len(dl_val)
     val_loss_vec.append(val_loss)
 
-    early_stopping(val_loss_vec[-1], ecg_net)
+    early_stopping(val_loss_vec[-1], ecg_net,optimizer=optimizer)
     if early_stopping.early_stop:
         print("Early stopping")
         break
@@ -136,8 +146,3 @@ __, y_true, y_pred = forward_epoch(ecg_net, dl_test, loss_function, optimizer, t
 
 
 figures(y_true,y_pred,task)
-
-
-
-
-

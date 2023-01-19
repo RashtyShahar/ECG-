@@ -1,42 +1,48 @@
 import numpy as np
 import torch
 import matplotlib.pyplot as plt
-from sklearn.metrics import precision_recall_curve
-from sklearn.metrics import r2_score
+from sklearn.metrics import precision_recall_curve , average_precision_score , r2_score
 from sklearn.metrics import mean_absolute_error as mae
 
 
 def figures(y_test, y_pred, task):
     y_test = y_test.cpu().detach().numpy()
     y_pred = y_pred.cpu().detach().numpy()
+    plt.rcParams['font.size'] = 18 # changing the font size
 
     if task == 'classification':
         # labels = ['AVB', 'CRBBB', 'CLBBB', 'SBRAD', 'AFIB', 'STACH', 'NORM']
         label = ['1dAVb', 'RBBB', 'LBBB', 'SB', 'AF', 'ST']
 
+        fig = plt.figure(figsize=(18, 12))
+        fig.suptitle("Precision-Recall Curves",fontsize=20)
         for i in range(y_pred.shape[1]):
-            plt.figure()
+            row = i // 3
+            col = i % 3
+            ax = plt.subplot2grid((2, 3), (row, col))
             # no skill:
             no_skill = len(y_test[:, i][y_test[:, i] == 1]) / len(y_test[:, i])
 
             # calculating precision and recall:
             precision, recall, thresholds = precision_recall_curve(y_test[:, i], y_pred[:, i])
-
+            average_precision = average_precision_score(y_test[:, i], y_pred[:, i])
             # create and plot precision recall curve:
-            plt.plot(recall, precision, label='precision recal curve')
+            ax.plot(recall, precision, color= 'midnightblue',linewidth= 4, label=f'AUPRC={average_precision:.4f}')
             # plot no skill graph:
-            plt.plot([0, 1], [no_skill, no_skill], linestyle='--', label='No Skill')
+            ax.plot([0, 1], [no_skill, no_skill], linestyle='--',linewidth= 4, color = 'teal',label='No Skill')
 
             # add axis labels to plot
-            plt.title(f'{label[i]} Precision-Recall Curve')
-            plt.ylabel('PPV')
-            plt.xlabel('Se')
-            plt.legend()
+            ax.set_title(f'{label[i]}')
+            ax.legend()
 
-        # display plot
-            plt.show()
-            #add path to save figure
-            # plt.savefig(r'')
+        #display figure
+        fig.supylabel('PPV')
+        fig.supxlabel('Se')
+        plt.show()
+
+        #add path to save figure
+        # plt.savefig(r'')
+
 
     if task == 'age estimation':
         # error calculation:
@@ -46,10 +52,10 @@ def figures(y_test, y_pred, task):
         std = np.round(np.std(err),decimals=2)
         # figures:
         fig, ax = plt.subplots()
-        ax.scatter(y_test, y_pred, alpha=0.5)
-        ax.plot(y_test, y_test)
+        ax.scatter(y_test, y_pred, alpha=0.2, color= 'midnightblue')
+        ax.plot(y_test, y_test, color= 'black', legend='y prediction = y true')
         a, b = np.polyfit(y_test, y_pred, 1)
-        plt.plot(y_test, a * y_test + b, label=f' $R^2$ = {R2}, MAE = {MAE:.2f} + {std:.2f}')
+        plt.plot(y_test, a * y_test + b,linewidth= 4,color= 'midnightblue',  label=f' $R^2$ = {R2}, MAE = {MAE:.2f} \u00b1 {std:.2f}')
         plt.legend(loc='upper left')
         ax.set_xlabel('True age [years]')
         ax.set_ylabel('estimated age [years]')

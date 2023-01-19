@@ -20,7 +20,7 @@ class EarlyStopping:
                             Default: 'checkpoint.pt'
             trace_func (function): trace print function.
                             Default: print
-            learning_rate(int):learning_rate
+            learning_rate(float):learning_rate
                             Default:0.001
             learning_patience(int): How long to wait after last time validation loss improved before changing learning rate
                             Default:7
@@ -39,6 +39,7 @@ class EarlyStopping:
         self.no_improvement_count = 0
         self.learning_patience = learning_patience #should be smaller than patience
         self.counter_of_decreasment=0
+
     def __call__(self, val_loss, model,optimizer):
 
         score = -val_loss
