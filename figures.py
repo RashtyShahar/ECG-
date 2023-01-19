@@ -8,7 +8,7 @@ from sklearn.metrics import mean_absolute_error as mae
 def figures(y_test, y_pred, task):
     y_test = y_test.cpu().detach().numpy()
     y_pred = y_pred.cpu().detach().numpy()
-    plt.rcParams['font.size'] = 18 # changing the font size
+    plt.rcParams['font.size'] = 14 # changing the font size
 
     if task == 'classification':
         # labels = ['AVB', 'CRBBB', 'CLBBB', 'SBRAD', 'AFIB', 'STACH', 'NORM']
@@ -32,7 +32,7 @@ def figures(y_test, y_pred, task):
             ax.plot([0, 1], [no_skill, no_skill], linestyle='--',linewidth= 4, color = 'teal',label='No Skill')
 
             # add axis labels to plot
-            ax.set_title(f'{label[i]}')
+            ax.set_title(f'{label[i]}',fontsize=16)
             ax.legend()
 
         #display figure
@@ -52,11 +52,11 @@ def figures(y_test, y_pred, task):
         std = np.round(np.std(err),decimals=2)
         # figures:
         fig, ax = plt.subplots()
-        ax.scatter(y_test, y_pred, alpha=0.2, color= 'midnightblue')
-        ax.plot(y_test, y_test, color= 'black', legend='y prediction = y true')
+        ax.scatter(y_test, y_pred, alpha=0.2, color= 'teal')
+        ax.plot(y_test, y_test, color= 'black', label='y prediction = y true')
         a, b = np.polyfit(y_test, y_pred, 1)
         plt.plot(y_test, a * y_test + b,linewidth= 4,color= 'midnightblue',  label=f' $R^2$ = {R2}, MAE = {MAE:.2f} \u00b1 {std:.2f}')
-        plt.legend(loc='upper left')
+        plt.legend(loc='upper left',fontsize=10)
         ax.set_xlabel('True age [years]')
         ax.set_ylabel('estimated age [years]')
         plt.show()
