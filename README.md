@@ -6,7 +6,7 @@ https://physionet.org/content/ptb-xl/1.0.1/
 1.Age estimation - regression 
 
 2.Cardiac arrhyth-mia diagnosis - Classification 
-## Architecture - Based on architecture described at :'Automatic diagnosis of the 12-lead ECG using a deep neural network' by Ribeiro, Antônio H et-al
+## Model - Based on architecture described at :'Automatic diagnosis of the 12-lead ECG using a deep neural network' by Ribeiro, Antônio H et-al
 ![image](https://user-images.githubusercontent.com/112961476/210334307-cc42f997-f1b6-4bc0-b2a7-2e346646ec68.png)
 
 Consists of convolutional layer followed by four residual blocks with two convolutional layers per block. The output of the last block is fed into a fully connected layer. The output of each convolutional layer is rescaled using batch normalization and fed into a rectified linear activation unit (ReLU).
