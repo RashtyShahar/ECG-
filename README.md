@@ -35,7 +35,7 @@ conda env create -f requirments.yml
 #### This model extract features from each lead separetly and then combine all features together.
 
 
-#### We created an algorithm that extracts features from each lead separately and linearly combines the features to produce arrythmia classifications or age estimations. Using this model, we implemented Recursive Lead Elimination (RLE). Starting from 12 leads, we train the model on N number of leads, then in validation we create N subsets of N-1 leads. A subset is chosen to be eliminated if it has the highest average AUPRC for six arrythmia classifications or the lowest MAE for age estimation, thus reducing the lead set by one. This process is repeated until one lead is left. 
+#### We created an algorithm that extracts features from each lead separately and linearly combines the features to produce arrythmia classifications or age estimations. Using this model, we implemented Recursive Lead Elimination (RLE). Starting from 12 leads, we train the model on N number of leads, then in validation we create N subsets of N-1 leads. A subset is chosen to be eliminated if it has the highest average AUPRC for six arrythmia classifications or the lowest MAE for age estimation, thus reducing the lead set by one. This process is repeated until only 3 leads were left. 
 
 ![image](https://github.com/RashtyShahar/ECG-Project/assets/112961476/b38e8052-9e54-4554-92ec-6422fa7f1d0b)
 
@@ -43,6 +43,7 @@ conda env create -f requirments.yml
 
 #### Our next step after choseing the the reduced lead system was to create the UResNet architecure described at :"First Steps Towards Self-Supervised Pretraining of the 12-Lead ECG; First Steps Towards Self-Supervised Pretraining of the 12-Lead ECG" , Gedon, Daniel Ribeiro, Antônio H ,Wahlström Niklas Schön, Thomas B
 ![image](https://github.com/RashtyShahar/ECG-Project/assets/112961476/9657e026-a874-4291-b3bb-9b0f0ad5b6c1)
+
 #### We used this architecure as a pre-task, took the reduced ECG leads set, transfer it thruogh the UResNet to create an estimation of the original 12-leads set , then the restored signal (X_hat) was transferred through the Resnet(model1) to get out final results :
 
 
