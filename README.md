@@ -6,7 +6,7 @@ https://physionet.org/content/ptb-xl/1.0.1/
 1. Age estimation - regression 
 
 2. Cardiac arrhyth-mia diagnosis - Classification 
-## Model - Based on architecture described at : 'Automatic diagnosis of the 12-lead ECG using a deep neural network' by Ribeiro , Antônio H et-al
+## Model1 - Based on architecture described at : 'Automatic diagnosis of the 12-lead ECG using a deep neural network' by Ribeiro , Antônio H et-al
 ![image](https://user-images.githubusercontent.com/112961476/210334307-cc42f997-f1b6-4bc0-b2a7-2e346646ec68.png)
 
 Consists of convolutional layer followed by four residual blocks with two convolutional layers per block. The output of the last block is fed into a fully connected layer. The output of each convolutional layer is rescaled using batch normalization and fed into a rectified linear activation unit (ReLU).
@@ -27,8 +27,23 @@ conda env create -f requirments.yml
 ![image](https://user-images.githubusercontent.com/112961476/213377444-e62ed994-8f18-4125-a7a8-bcde989da7d1.png)
 
 
+### Our next goal was to Reduce the electrocardiogram time series lead system
+#### Model2: We implemented architecure that was described by Han, Chuang Shi, Li at : "ML–ResNet: A novel network to detect and locate myocardial infarction using 12 leads ECG"
+
+![image](https://github.com/RashtyShahar/ECG-Project/assets/112961476/7c20b482-7001-4a9b-b581-685ab81ba5aa)
+
+#### This model extract features from each lead separetly and then combine all features together.
 
 
+#### We created an algorithm that extracts features from each lead separately and linearly combines the features to produce arrythmia classifications or age estimations. Using this model, we implemented Recursive Lead Elimination (RLE). Starting from 12 leads, we train the model on N number of leads, then in validation we create N subsets of N-1 leads. A subset is chosen to be eliminated if it has the highest average AUPRC for six arrythmia classifications or the lowest MAE for age estimation, thus reducing the lead set by one. This process is repeated until one lead is left. 
+
+![image](https://github.com/RashtyShahar/ECG-Project/assets/112961476/b38e8052-9e54-4554-92ec-6422fa7f1d0b)
+
+
+
+#### Our next step after choseing the the reduced lead system was to create the UResNet architecure described at :"First Steps Towards Self-Supervised Pretraining of the 12-Lead ECG; First Steps Towards Self-Supervised Pretraining of the 12-Lead ECG" , Gedon, Daniel Ribeiro, Antônio H ,Wahlström Niklas Schön, Thomas B
+![image](https://github.com/RashtyShahar/ECG-Project/assets/112961476/9657e026-a874-4291-b3bb-9b0f0ad5b6c1)
+#### We used this architecure as a pre-task, took the reduced ECG leads set, transfer it thruogh the UResNet to create an estimation of the original 12-leads set , then the restored signal (X_hat) was transferred through the Resnet(model1) to get out final results :
 
 
 
