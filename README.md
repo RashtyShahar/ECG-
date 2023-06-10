@@ -38,10 +38,10 @@ conda env create -f requirments.yml
 
 
 
-#### Our next step after choseing the the reduced lead system was to create the UResNet architecure described at :"First Steps Towards Self-Supervised Pretraining of the 12-Lead ECG; First Steps Towards Self-Supervised Pretraining of the 12-Lead ECG" , Gedon, Daniel Ribeiro, Antônio H ,Wahlström Niklas Schön, Thomas B
+#### Our next step after choseing the the reduced lead system was to implement the UResNet architecure described at :"First Steps Towards Self-Supervised Pretraining of the 12-Lead ECG; First Steps Towards Self-Supervised Pretraining of the 12-Lead ECG" , Gedon, Daniel Ribeiro, Antônio H ,Wahlström Niklas Schön, Thomas B
 ![image](https://github.com/RashtyShahar/ECG-Project/assets/112961476/9657e026-a874-4291-b3bb-9b0f0ad5b6c1)
 
-#### We used this architecure as a pre-task, took the reduced ECG leads set, transfer it thruogh the UResNet to create an estimation of the original 12-leads set , then the restored signal (X_hat) was transferred through the Resnet(model1) to get out final results :
+#### We used this architecure as a pre-task, The reduced set was passed through the UResNet to generate an estimation of the original 12-leads set. Subsequently, the restored signal (X_hat) was forwarded through ResNet (model1) to obtain our final results :
 
 
 
