@@ -111,7 +111,7 @@ if os.path.exists(r'scores_for_plot.pkl'):
         data = pickle.load(file)
     lead_indexes_eliminate,scores_for_plot,_ = data
 
-how_many_leads_to_reduce = 5
+how_many_leads_to_reduce = 2
 for i in range(how_many_leads_to_reduce):
     ecg_net.load_state_dict(torch.load('RLE_checkpoint_initialized.pt'))
     optimizer = torch.optim.Adam(params=ecg_net.parameters(), lr=learning_rate)

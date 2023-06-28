@@ -10,11 +10,11 @@ from figures import figures_RLE ,learning_curve,figures,number_of_leads_plot,cal
 from Training_RLE2 import get_real_indexes,forward_epoch_train_UNet
 from EarlyStopping import EarlyStopping
 import numpy as np
-from model_Rebeiro import UResNet
+from UResNet import UResNet
+import pickle
 
-
-
-lead_indexes_eliminate=[8,10,11]
+# lead_indexes_eliminate=[10,9,11,8,7,6,5,4,2,3]
+lead_indexes_eliminate=[10,9,11,8,7,6,5,4,2]
 
 task = 'classification' # can be 'classification' or 'age estimation'
 # task = 'age estimation'
@@ -24,7 +24,7 @@ device = torch.device(1) if torch.cuda.is_available() else "cpu"
 
 # path at remote server
 DB_path = r"/home/rashty/data/"
-frequency=500   # 500 Hz or 100 Hz
+frequency=100   # 500 Hz or 100 Hz
 ECG_path = DB_path + f'records{frequency}/'
 table_path = DB_path + 'ptbxl_database.csv'
 table_org = pd.read_csv(table_path)
@@ -51,16 +51,17 @@ batch_size = 16
 dl_train, dl_val, dl_test = PtBXL_set_spit(ecg_ds,table,batch_size, num_workers=0)
 
 
-# dummy_input = torch.zeros([1,8,5000])
+# dummy_input = torch.zeros([1,12-len(lead_indexes_eliminate),5000])
 # dummy_model = UResNet(([1, 12-len(lead_indexes_eliminate), 5000]))
 # output = dummy_model(dummy_input)
 # print('input.shape:',dummy_input.shape)
 # print('output.shape:',output.shape)
 
 Unet = UResNet([batch_size, 12-len(lead_indexes_eliminate), transformed.shape[1]])
+# print(Unet)
 learning_rate = 0.001
 optimizer = torch.optim.Adam(params=Unet.parameters(), lr=learning_rate)
-epochs = 10
+epochs = 30
 loss_function = nn.L1Loss()
 
 early_stopping = EarlyStopping(patience=13, verbose=True,learning_rate=learning_rate,learning_patience=10,path='checkpoint_Unet.pt')
@@ -92,3 +93,12 @@ for i_epoch in range(epochs):
 # load the last checkpoint with the best model
 Unet.load_state_dict(torch.load('checkpoint_Unet.pt'))
 learning_curve(train_loss_vec,val_loss_vec,task)
+
+test_loss = 0
+__, X_true, X_pred = forward_epoch_train_UNet(Unet, dl_test, loss_function, optimizer, test_loss,lead_to_eliminate=lead_indexes_eliminate,
+                                                        to_train=False, desc='Test', device=device)
+
+# data = [X_true.cpu().detach().numpy(),X_pred.cpu().detach().numpy()]
+# data = [X_true, X_pred]
+with open(f'Unet_Restored_from_{12-len(lead_indexes_eliminate)}_leads.pkl', 'wb') as file:
+    pickle.dump(X_pred, file)
