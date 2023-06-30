@@ -36,10 +36,7 @@ conda env create -f requirments.yml
 
 ![image](https://github.com/RashtyShahar/ECG-Final-Project/assets/112961476/e1358bad-5892-4ce9-85f1-115fd18a6957)
 
-By using this algorithm we were able to determine the minimal set of leads that produce non inferiar results to the full 12-leads set,
-the minimal number of leads required was 8:
-
-![image](https://github.com/RashtyShahar/ECG-Final-Project/assets/112961476/898bcf11-9462-4692-8484-6c284b2d63bb)
+#### By employing this algorithm, we successfully identified the smallest set of leads that yielded results comparable to the complete 12-leads set. The minimum number of leads needed was determined to be 8.
 
 
 ![image](https://github.com/RashtyShahar/ECG-Final-Project/assets/112961476/23d44e58-c150-4443-8e7b-02b937b6832d)
@@ -48,15 +45,22 @@ the minimal number of leads required was 8:
 ![image](https://github.com/RashtyShahar/ECG-Final-Project/assets/112961476/10d120ea-a643-4c24-a082-4b4760611b9a)
 
 
+![image](https://github.com/RashtyShahar/ECG-Final-Project/assets/112961476/2050401b-1248-45cc-8c4b-969a9726fe4d)
 
 
 
 
 
-#### Our next step after choseing the the reduced lead system was to implement the UResNet architecure described at :"First Steps Towards Self-Supervised Pretraining of the 12-Lead ECG; First Steps Towards Self-Supervised Pretraining of the 12-Lead ECG" , Gedon, Daniel Ribeiro, Antônio H ,Wahlström Niklas Schön, Thomas B
+#### To explore the potential for further lead reduction (beyond 8 leads), we conducted a preliminary step.
+#### We implemented the UResNet architecure described at :"First Steps Towards Self-Supervised Pretraining of the 12-Lead ECG; First Steps Towards Self-Supervised Pretraining of the 12-Lead ECG" , Gedon, Daniel Ribeiro, Antônio H ,Wahlström Niklas Schön, Thomas B
 ![image](https://github.com/RashtyShahar/ECG-Project/assets/112961476/9657e026-a874-4291-b3bb-9b0f0ad5b6c1)
 
-#### We used this architecure as a pre-task, The reduced set was passed through the UResNet to generate an estimation of the original 12-leads set. Subsequently, the restored signal (X_hat) was forwarded through ResNet (model1) to obtain our final results :
+#### We used this architecure as a pre-task, The reduced set of leads was input into the UResNet, which generated an estimation of the original 12-leads set. Following that, the restored signal (X_hat) was then processed through ResNet (model1) to obtain our final results :
+
+
+
+
+
 
 
 
