@@ -2,6 +2,10 @@
 ## Dataset
 PhysioNet PTB-XL, a large publicly available of 12-lead electrocardiography dataset:
 https://physionet.org/content/ptb-xl/1.0.1/
+
+![image](https://github.com/RashtyShahar/ECG-Final-Project/assets/112961476/a4379e42-0370-451c-b80a-0b3acea70008)
+
+
 ## Tasks
 1. Age estimation - regression 
 
