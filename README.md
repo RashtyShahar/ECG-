@@ -43,15 +43,10 @@ conda env create -f requirments.yml
 #### By employing this algorithm, we successfully identified the smallest set of leads that yielded results comparable to the complete 12-leads set. The minimum number of leads needed was determined to be 8.
 
 
-![image](https://github.com/RashtyShahar/ECG-Final-Project/assets/112961476/23d44e58-c150-4443-8e7b-02b937b6832d)
-
-
-![image](https://github.com/RashtyShahar/ECG-Final-Project/assets/112961476/10d120ea-a643-4c24-a082-4b4760611b9a)
+![image](https://github.com/RashtyShahar/ECG-Final-Project/assets/112961476/35f0749c-a812-4cf8-8a86-ef8de400bf77)
 
 
 ![image](https://github.com/RashtyShahar/ECG-Final-Project/assets/112961476/2050401b-1248-45cc-8c4b-969a9726fe4d)
-
-
 
 
 
