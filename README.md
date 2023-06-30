@@ -32,7 +32,10 @@ conda env create -f requirments.yml
 
 ![image](https://github.com/RashtyShahar/ECG-Project/assets/112961476/7c20b482-7001-4a9b-b581-685ab81ba5aa)
 
-#### We created an algorithm that extracts features from each lead separately and linearly combines the features to produce arrythmia classifications or age estimations. Using this model, we implemented Recursive Lead Elimination (RLE). Starting from 12 leads, we train the model on N number of leads, then in validation we create N subsets of N-1 leads. A subset is chosen to be eliminated if it has the highest average AUPRC for six arrythmia classifications or the lowest MAE for age estimation, thus reducing the lead set by one. This process is repeated until only 3 leads were left. 
+#### We created an algorithm that extracts features from each lead separately and linearly combines the features to produce arrythmia classifications or age estimations. Using this model, we implemented Recursive Lead Elimination (RLE) algorithm. Starting from 12 leads, we train the model on N number of leads, then in validation we create N subsets of N-1 leads. A subset is chosen to be eliminated if it has the highest average AUPRC for six arrythmia classifications or the lowest MAE for age estimation, thus reducing the lead set by one. This process is repeated until only 3 leads were left. 
+
+![image](https://github.com/RashtyShahar/ECG-Final-Project/assets/112961476/e1358bad-5892-4ce9-85f1-115fd18a6957)
+
 
 ![image](https://github.com/RashtyShahar/ECG-Final-Project/assets/112961476/23d44e58-c150-4443-8e7b-02b937b6832d)
 
