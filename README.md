@@ -45,8 +45,8 @@ conda env create -f requirments.yml
 
 ![image](https://github.com/RashtyShahar/ECG-Final-Project/assets/112961476/35f0749c-a812-4cf8-8a86-ef8de400bf77)
 
+![image](https://github.com/RashtyShahar/ECG-Final-Project/assets/112961476/0b4470ab-3718-491d-8339-b3d186d7fab1)
 
-![image](https://github.com/RashtyShahar/ECG-Final-Project/assets/112961476/2050401b-1248-45cc-8c4b-969a9726fe4d)
 
 
 
