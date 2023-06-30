@@ -36,6 +36,11 @@ conda env create -f requirments.yml
 
 ![image](https://github.com/RashtyShahar/ECG-Final-Project/assets/112961476/e1358bad-5892-4ce9-85f1-115fd18a6957)
 
+By using this algorithm we were able to determine the minimal set of leads that produce non inferiar results to the full 12-leads set,
+the minimal number of leads required was 8:
+
+![image](https://github.com/RashtyShahar/ECG-Final-Project/assets/112961476/898bcf11-9462-4692-8484-6c284b2d63bb)
+
 
 ![image](https://github.com/RashtyShahar/ECG-Final-Project/assets/112961476/23d44e58-c150-4443-8e7b-02b937b6832d)
 
