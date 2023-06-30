@@ -7,9 +7,9 @@ https://physionet.org/content/ptb-xl/1.0.1/
 
 
 ## Tasks
-1. Age estimation - regression 
+1. Age estimation - Regression 
 
-2. Cardiac arrhyth-mia diagnosis - Classification 
+2. Cardiac arrhyth-mia diagnosis - Multi-Label Classification 
 ## Model1 - Based on architecture described at : 'Automatic diagnosis of the 12-lead ECG using a deep neural network' by Ribeiro , Antônio H et-al
 ![image](https://user-images.githubusercontent.com/112961476/210334307-cc42f997-f1b6-4bc0-b2a7-2e346646ec68.png)
 
